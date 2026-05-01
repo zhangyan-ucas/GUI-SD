@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="GUI-SD: Learn where to Click from Yourself - On-Policy Self-Distillation for GUI Grounding">
+  <meta name="keywords" content="GUI Grounding, Self-Distillation, OPSD, GUI Agents, Reinforcement Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GUI-SD: Learn where to Click from Yourself</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+</head>
+<body>
+
+
+<!-- ==================== Hero Section ==================== -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+
+          <h1 class="title is-1 publication-title">
+            Learn where to Click from Yourself:<br>
+            On-Policy Self-Distillation for GUI Grounding
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="#">Yan Zhang</a><sup>1,3,*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Daiqing Wu</a><sup>1,3,*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Huawen Shen</a><sup>1,3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Yu Zhou</a><sup>2,&dagger;</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Can Ma</a><sup>1,3,&dagger;</sup>
+            </span>
+          </div>
+
+          <div class="is-size-6 publication-authors" style="margin-top: 0.5rem;">
+            <span class="author-block"><sup>1</sup>Institute of Information Engineering, Chinese Academy of Sciences</span><br>
+            <span class="author-block"><sup>2</sup>VCIP &amp; TMCC &amp; DISSec, College of Computer Science, Nankai University</span><br>
+            <span class="author-block"><sup>3</sup>School of Cyber Security, University of Chinese Academy of Sciences</span>
+          </div>
+
+          <div class="is-size-7" style="margin-top: 0.3rem; color: #888;">
+            <span>* Equal contribution</span>&nbsp;&nbsp;
+            <span>&dagger; Corresponding authors</span>
+          </div>
+
+          <!-- Links -->
+          <div class="column has-text-centered" style="margin-top: 1rem;">
+            <div class="publication-links">
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-database"></i></span>
+                  <span>Data</span>
+                </a>
+              </span>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== Highlights ==================== -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="highlight-grid">
+        <div class="highlight-card">
+          <span class="icon-large">&#127942;</span>
+          <h4>First OPSD for GUI Grounding</h4>
+          <p>First exploration of OPSD in the GUI grounding domain, offering an efficient alternative to GRPO.</p>
+        </div>
+        <div class="highlight-card">
+          <span class="icon-large">&#128065;</span>
+          <h4>Visual Privileged Guidance</h4>
+          <p>Visually grounded teacher guidance with entropy-aware distillation for rich and reliable supervision.</p>
+        </div>
+        <div class="highlight-card">
+          <span class="icon-large">&#9889;</span>
+          <h4>4x Faster Training</h4>
+          <p>Single rollout with dense token-level supervision, ~4x faster than GRPO-based methods.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== Abstract ==================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Graphical User Interface (GUI) grounding maps natural language instructions
+            to precise interface locations for autonomous interaction. Recent advances leveraging
+            reinforcement learning (e.g., GRPO) have achieved strong performance, but these
+            methods require expensive multiple rollouts and suffer from sparse signals on hard
+            samples. These limitations motivate exploring on-policy self-distillation (OPSD),
+            which provides efficient, dense token-level supervision from a single rollout, yet its
+            applicability to visual domains such as GUI grounding remains unexplored. In this
+            paper, we present <strong>GUI-SD</strong> (GUI Grounding via Self-Distillation), the first OPSD
+            framework tailored for GUI grounding. It combines visually enriched privileged
+            context with entropy-guided distillation to deliver rich, targeted token-level supervision
+            for precise coordinate generation. Specifically, GUI-SD builds the teacher's
+            privileged context by highlighting the ground-truth region with a bounding box
+            and applying a Gaussian soft-mask, offering informative yet constrained guidance
+            that preserves soft distributional signals from the teacher. Furthermore, it adaptively
+            weights tokens based on digit-position significance and teacher confidence,
+            concentrating optimization on the most impactful coordinate tokens. Extensive
+            evaluations on six representative benchmarks demonstrate that GUI-SD substantially
+            outperforms GRPO-based methods and naive OPSD in both accuracy and
+            training efficiency. The code and training data will be publicly released.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contributions -->
+    <div class="columns is-centered" style="margin-top: 1rem;">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4 has-text-centered">Contributions</h3>
+        <div class="content has-text-justified">
+          <ul>
+            <li>We present the <strong>first exploration of the OPSD framework in the GUI grounding domain</strong>,
+            offering an efficient alternative to GRPO-based methods that suffer from expensive multiple
+            rollouts and sparse signals on hard samples.</li>
+            <li>We propose <strong>GUI-SD</strong>, which integrates visually grounded teacher guidance with
+            entropy-aware distillation, enabling rich and reliable supervision that concentrates optimization
+            on the most impactful coordinate tokens.</li>
+            <li>Extensive experiments verify the effectiveness of GUI-SD over naive OPSD and GRPO-based
+            methods across six representative GUI grounding benchmarks, demonstrating significant improvements
+            in both accuracy and training efficiency, <strong>establishing OPSD as a promising paradigm
+            for future GUI grounding research</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== Method Overview ==================== -->
+<section class="section" style="background: #fafafa;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method Overview</h2>
+        <div class="content has-text-justified" style="margin-bottom: 1.5rem;">
+          <p>
+            GUI-SD consists of two complementary components:
+            <strong>(a) Teacher Privileged Guidance</strong> &mdash; the teacher receives a visually enriched
+            privileged context (drawn bounding box + Gaussian soft-mask), while the student receives the
+            original image. Both share the same policy weights.
+            <strong>(b) Entropy-Guided Optimization</strong> &mdash; computes reverse KL divergence between teacher and
+            student logits at each token position, weighted by positional credit assignment (higher weight for
+            high-order digits) and entropy-gated supervision (higher weight for low-entropy, high-confidence
+            teacher predictions).
+          </p>
+        </div>
+
+        <img src="./images/Figure3.png" alt="GUI-SD Framework Overview" class="method-image">
+        <p class="has-text-centered" style="margin-top: 0.8rem; color: #666; font-size: 0.9rem;">
+          <strong>Figure 3.</strong> Overview of the GUI-SD framework. (a) The teacher takes a privileged context
+          x<sub>pri</sub>, which augments the student's original input x with visual cues and a hint prompt,
+          to produce richer soft labels for guiding the student. (b) The training objective is a weighted KL
+          divergence, where w(t) prioritizes high-order tokens via positional credit and filters unreliable
+          supervision via entropy gating on teacher confidence.
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== Key Findings ==================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Key Findings</h2>
+
+        <div class="finding-box">
+          <strong>Finding 1: Textual Privilege Causes Distribution Collapse.</strong>
+          Textual privilege causes the teacher's distribution to collapse into near-one-hot targets
+          with near-zero entropy, making the distillation signal nearly equivalent to hard-label SFT
+          and providing negligible benefit over supervised fine-tuning.
+        </div>
+
+        <div class="finding-box">
+          <strong>Finding 2: High-Order Digits Carry the Most Reliable Signal.</strong>
+          At the per-token level, higher-order digits (hundreds) exhibit the largest teacher-student
+          confidence gap and carry the most reliable supervisory signal, suggesting that optimization
+          should prioritize these positions. The standard reverse KL, which treats all tokens uniformly,
+          fails to exploit this.
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== Comparison Figure ==================== -->
+<section class="section" style="background: #fafafa;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Why GUI-SD?</h2>
+        <div class="content has-text-justified" style="margin-bottom: 1.5rem;">
+          <p>
+            <strong>(a) GRPO</strong> requires expensive multiple rollouts and produces zero reward on hard samples.
+            <strong>(b) Naive OPSD</strong> forwards the policy twice and distills via reverse KL with uniform per-token weight,
+            yet suffers from distillation-to-SFT collapse and indiscriminate optimization.
+            <strong>(c) GUI-SD</strong> addresses both issues via teacher privileged guidance and entropy-guided optimization.
+            By replacing sparse outcome-level rewards with dense token-level guidance, OPSD provides an appealing
+            alternative for improving both training efficiency and supervision quality.
+          </p>
+        </div>
+
+        <img src="./images/Figure1.png" alt="Comparison between GRPO, Naive OPSD, and GUI-SD" class="method-image">
+        <p class="has-text-centered" style="margin-top: 0.8rem; color: #666; font-size: 0.9rem;">
+          <strong>Figure 1.</strong> (a) <strong>GRPO</strong> requires expensive multiple rollouts and produces zero reward on hard samples.
+          (b) <strong>Naive OPSD</strong> forwards the policy twice and distills via reverse KL with uniform per-token weight,
+          yet suffers from distillation-to-SFT collapse and indiscriminate optimization.
+          (c) <strong>Ours</strong> addresses both issues via teacher privileged guidance and entropy-guided optimization.
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== Main Results ==================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Main Results</h2>
+        <p class="has-text-centered" style="margin-bottom: 1.5rem; color: #666;">
+          GUI grounding accuracy on six representative benchmarks. Bold indicates the best results.
+        </p>
+
+        <div class="table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Time/epoch</th>
+                <th>SSP</th>
+                <th>SS2</th>
+                <th>UIV</th>
+                <th>OSW-G</th>
+                <th>OSW-GR</th>
+                <th>MMG</th>
+                <th>Avg.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align:left;">Qwen3-VL-Instruct</td>
+                <td>&mdash;</td>
+                <td>53.6</td>
+                <td>93.2</td>
+                <td>25.2</td>
+                <td>58.7</td>
+                <td>67.4</td>
+                <td>83.0</td>
+                <td>63.5</td>
+              </tr>
+              <tr>
+                <td style="text-align:left;">+ GRPO-Binary</td>
+                <td>16.9</td>
+                <td>56.8</td>
+                <td>94.6</td>
+                <td>27.6</td>
+                <td>61.2</td>
+                <td>68.6</td>
+                <td>84.3</td>
+                <td>65.5</td>
+              </tr>
+              <tr>
+                <td style="text-align:left;">+ GRPO-Distance</td>
+                <td>16.7</td>
+                <td>56.6</td>
+                <td>93.8</td>
+                <td>27.5</td>
+                <td>62.1</td>
+                <td>69.9</td>
+                <td>83.3</td>
+                <td>65.5</td>
+              </tr>
+              <tr>
+                <td style="text-align:left;">+ GRPO-Gaussian</td>
+                <td>16.8</td>
+                <td>57.4</td>
+                <td>94.0</td>
+                <td>28.2</td>
+                <td>61.9</td>
+                <td>70.0</td>
+                <td>83.7</td>
+                <td>65.9</td>
+              </tr>
+              <tr class="highlight-row">
+                <td style="text-align:left;">+ GUI-SD (Ours)</td>
+                <td class="best-score">4.2</td>
+                <td class="best-score">60.7</td>
+                <td class="best-score">95.1</td>
+                <td class="best-score">33.3</td>
+                <td class="best-score">64.0</td>
+                <td class="best-score">70.9</td>
+                <td class="best-score">86.7</td>
+                <td class="best-score">68.4</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+          <div class="columns is-centered">
+            <div class="column is-half">
+              <div class="finding-box" style="border-left-color: #23d160;">
+                <strong style="color: #23d160;">+2.5 Avg. Accuracy</strong> over best GRPO baseline
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="finding-box" style="border-left-color: #23d160;">
+                <strong style="color: #23d160;">~4x Faster</strong> training per epoch (4.2h vs 16.8h)
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== SOTA Comparison ==================== -->
+<section class="section" style="background: #fafafa;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Comparison with SOTA Methods</h2>
+        <div class="content has-text-justified">
+          <p>
+            GUI-SD surpasses existing GUI grounding methods in average accuracy across six representative
+            benchmarks:
+          </p>
+          <ul>
+            <li>On <strong>ScreenSpot-Pro</strong>, GUI-SD achieves <strong>60.7%</strong>, outperforming
+            Propose-then-Critic (58.7%) which relies on test-time scaling.</li>
+            <li>On <strong>OSWorld-G-Refine</strong>, GUI-SD reaches <strong>70.9%</strong>, surpassing
+            ZwZ (69.0%) which leverages large teacher models (Qwen3-VL-235B).</li>
+            <li>Notably, GUI-SD achieves these improvements through a <strong>self-distillation framework</strong>
+            that uses only the policy model itself as the teacher, without relying on test-time scaling
+            or external large-scale models.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== BibTeX ==================== -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{zhang2025guisd,
+  title     = {Learn where to Click from Yourself: On-Policy Self-Distillation for GUI Grounding},
+  author    = {Zhang, Yan and Wu, Daiqing and Shen, Huawen and Zhou, Yu and Ma, Can},
+  journal   = {arXiv preprint},
+  year      = {2025},
+}</code></pre>
+  </div>
+</section>
+
+
+<!-- ==================== Footer ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="#">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="#">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered" style="color: #999; font-size: 0.85rem;">
+          <p>
+            This website template is borrowed from
+            <a href="https://nerfies.github.io" style="color: #999;">Nerfies</a> and
+            <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" style="color: #999;">Academic Project Page Template</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>
