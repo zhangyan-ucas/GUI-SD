@@ -62,30 +62,23 @@
             <div class="publication-links">
 
               <span class="link-block">
-                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://arxiv.org/pdf/2605.00642" class="external-link button is-normal is-rounded is-dark" target="_blank">
                   <span class="icon"><i class="fas fa-file-pdf"></i></span>
                   <span>Paper</span>
                 </a>
               </span>
 
               <span class="link-block">
-                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://arxiv.org/abs/2605.00642" class="external-link button is-normal is-rounded is-dark" target="_blank">
                   <span class="icon"><i class="ai ai-arxiv"></i></span>
                   <span>arXiv</span>
                 </a>
               </span>
 
               <span class="link-block">
-                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://github.com/zhangyan-ucas/GUI-SD-code" class="external-link button is-normal is-rounded is-dark" target="_blank">
                   <span class="icon"><i class="fab fa-github"></i></span>
                   <span>Code</span>
-                </a>
-              </span>
-
-              <span class="link-block">
-                <a href="#" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-database"></i></span>
-                  <span>Data</span>
                 </a>
               </span>
 
@@ -134,24 +127,22 @@
         <div class="content has-text-justified">
           <p>
             Graphical User Interface (GUI) grounding maps natural language instructions
-            to precise interface locations for autonomous interaction. Recent advances leveraging
-            reinforcement learning (e.g., GRPO) have achieved strong performance, but these
-            methods require expensive multiple rollouts and suffer from sparse signals on hard
-            samples. These limitations motivate exploring on-policy self-distillation (OPSD),
-            which provides efficient, dense token-level supervision from a single rollout, yet its
-            applicability to visual domains such as GUI grounding remains unexplored. In this
-            paper, we present <strong>GUI-SD</strong> (GUI Grounding via Self-Distillation), the first OPSD
-            framework tailored for GUI grounding. It combines visually enriched privileged
-            context with entropy-guided distillation to deliver rich, targeted token-level supervision
-            for precise coordinate generation. Specifically, GUI-SD builds the teacher's
-            privileged context by highlighting the ground-truth region with a bounding box
-            and applying a Gaussian soft-mask, offering informative yet constrained guidance
-            that preserves soft distributional signals from the teacher. Furthermore, it adaptively
-            weights tokens based on digit-position significance and teacher confidence,
-            concentrating optimization on the most impactful coordinate tokens. Extensive
-            evaluations on six representative benchmarks demonstrate that GUI-SD substantially
-            outperforms GRPO-based methods and naive OPSD in both accuracy and
-            training efficiency. The code and training data will be publicly released.
+            to the visual coordinates of target elements and serves as a core capability for
+            autonomous GUI agents. Recent reinforcement learning methods (e.g., GRPO) have
+            achieved strong performance, but they rely on expensive multiple rollouts and suffer
+            from sparse signals on hard samples. These limitations make on-policy self-distillation
+            (OPSD), which provides dense token-level supervision from a single rollout, a promising
+            alternative. However, its applicability to GUI grounding remains unexplored. In this
+            paper, we present <strong>GUI-SD</strong>, the first OPSD framework tailored for GUI grounding.
+            First, it constructs a visually enriched privileged context for the teacher using a target
+            bounding box and a Gaussian soft mask, providing informative guidance without leaking
+            exact coordinates. Second, it employs entropy-guided distillation, which adaptively
+            weights tokens based on digit significance and teacher confidence, concentrating
+            optimization on the most impactful and reliable positions. Extensive experiments on
+            six representative GUI grounding benchmarks show that GUI-SD consistently outperforms
+            GRPO-based methods and naive OPSD in both accuracy and training efficiency.
+            Code and training data are available at
+            <a href="https://zhangyan-ucas.github.io/GUI-SD/" target="_blank">https://zhangyan-ucas.github.io/GUI-SD/</a>.
           </p>
         </div>
       </div>
@@ -414,7 +405,7 @@
     <pre><code>@article{zhang2025guisd,
   title     = {Learn where to Click from Yourself: On-Policy Self-Distillation for GUI Grounding},
   author    = {Zhang, Yan and Wu, Daiqing and Shen, Huawen and Zhou, Yu and Ma, Can},
-  journal   = {arXiv preprint},
+  journal   = {arXiv preprint arXiv:2605.00642},
   year      = {2025},
 }</code></pre>
   </div>
@@ -425,10 +416,10 @@
 <footer class="footer">
   <div class="container">
     <div class="content has-text-centered">
-      <a class="icon-link" href="#">
+      <a class="icon-link" href="https://arxiv.org/pdf/2605.00642" target="_blank">
         <i class="fas fa-file-pdf"></i>
       </a>
-      <a class="icon-link" href="#">
+      <a class="icon-link" href="https://github.com/zhangyan-ucas/GUI-SD-code" target="_blank">
         <i class="fab fa-github"></i>
       </a>
     </div>
